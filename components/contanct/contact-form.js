@@ -50,7 +50,7 @@ export default function contactForm() {
     notificationData = {
       status: 'success',
       title: 'Success!',
-      message: ' Your message Successfully store!',
+      message: ' Your message Successfully store!!!',
     }
   }
   if (requeststate === 'error') {
