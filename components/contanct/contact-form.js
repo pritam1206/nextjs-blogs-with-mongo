@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import classes from './contact-form.module.css'
-import Notification from '../ui/notification'
+import React, { useState } from 'react';
+import classes from './contact-form.module.css';
+import Notification from '../ui/notification';
 
 export default function contactForm() {
-  const [enteredEmail, setEmail] = useState('')
-  const [enteredName, setName] = useState('')
-  const [enteredMessgae, setMessage] = useState('')
-  const [requeststate, setrequest] = useState('')
-  const [stateErro, setError] = useState()
+  const [enteredEmail, setEmail] = useState('');
+  const [enteredName, setName] = useState('');
+  const [enteredMessgae, setMessage] = useState('');
+  const [requeststate, setrequest] = useState('');
+  const [stateErro, setError] = useState();
 
   async function sendContactData(contactDetails) {
     const response = await fetch('/api/contact', {
@@ -16,49 +16,49 @@ export default function contactForm() {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
-    const data = await response.json()
+    });
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || ' Something went wrong')
+      throw new Error(data.message || ' Something went wrong');
     }
   }
 
   async function submitHandler(event) {
-    event.preventDefault()
-    setrequest('pending')
+    event.preventDefault();
+    setrequest('pending');
     try {
       await sendContactData({
         email: enteredEmail,
         name: enteredName,
         message: enteredMessgae,
-      })
-      setrequest('success')
+      });
+      setrequest('success');
     } catch (error) {
-      setrequest('error')
-      setError(error)
+      setrequest('error');
+      setError(error);
     }
   }
-  let notificationData
+  let notificationData;
   if (requeststate === 'pending') {
     notificationData = {
       status: 'pending',
       title: 'Sending messgae',
       message: ' Your message on the way !',
-    }
+    };
   }
   if (requeststate === 'success') {
     notificationData = {
       status: 'success',
       title: 'Success!',
       message: ' Your message Successfully store!!!',
-    }
+    };
   }
   if (requeststate === 'error') {
     notificationData = {
       status: 'error',
       title: 'Error!',
       message: stateErro,
-    }
+    };
   }
   return (
     <section className={classes.contact}>
@@ -66,19 +66,19 @@ export default function contactForm() {
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.controls}>
           <div className={classes.control}>
-            <label htmlFor="email">Your Email</label>
+            <label htmlFor='email'>Your Email</label>
             <input
-              type="email"
+              type='email'
               required
               value={enteredEmail}
               onChange={(event) => setEmail(event.target.value)}
             ></input>
           </div>
           <div className={classes.control}>
-            <label htmlFor="name">Your Name</label>
+            <label htmlFor='name'>Your Name</label>
             <input
-              type="text"
-              id="name"
+              type='text'
+              id='name'
               required
               value={enteredName}
               onChange={(event) => setName(event.target.value)}
@@ -86,17 +86,17 @@ export default function contactForm() {
           </div>
         </div>
         <div className={classes.control}>
-          <label htmlFor="message">Your message</label>
+          <label htmlFor='message'>Your message</label>
           <textarea
-            id="message"
-            row="5"
+            id='message'
+            row='5'
             required
             value={enteredMessgae}
             onChange={(event) => setMessage(event.target.value)}
           />
         </div>
         <div className={classes.actions}>
-          <button>Send message</button>
+          <button id='btn-click'>Send message</button>
         </div>
       </form>
       {notificationData && (
@@ -107,5 +107,5 @@ export default function contactForm() {
         />
       )}
     </section>
-  )
+  );
 }
